@@ -1,7 +1,7 @@
 # Python code for parcellation (AAL, Harvard, Schaefer, kmeans and ward)
 
-# Update output folder path in 'connectivity_matrices_dir' - Line 79 (Folder location to save connectivity matrices)
-# Update input folder path in 'for' loop - Line 97 (Main folder location which has preprocessed functional nifti files of ABIDE/ADNI/PPMI/TaoWu/Neurocon dataset)
+# Update output folder path in 'connectivity_matrices_dir' - Line 80 (Folder location to save connectivity matrices)
+# Update input folder path in 'for' loop - Line 98 (Main folder location which has preprocessed functional nifti files of ABIDE/ADNI/PPMI/TaoWu/Neurocon dataset)
 
 #Nilearn packages:
 from nilearn import datasets #For atlases
@@ -65,6 +65,7 @@ def extract_timeseries(parcellation_img, functional_img, confounds):
 def compute_matrices(time_series, filename_prefix, output_dir):
     correlation_measure = ConnectivityMeasure(kind='correlation')
     correlation_matrix = correlation_measure.fit_transform([time_series])[0]
+    mean_correlation_matrix =correlation_measure.mean_   
 
     filename = filename_prefix + '_correlation_matrix.mat'
     scipy.io.savemat(os.path.join(output_dir, filename), {'data': correlation_matrix})
@@ -72,7 +73,7 @@ def compute_matrices(time_series, filename_prefix, output_dir):
     filename = filename_prefix + '_features_timeseries.mat'
     scipy.io.savemat(os.path.join(output_dir, filename), {'data': time_series})
     
-    return correlation_matrix
+    return correlation_matrix, mean_correlation_matrix
 
 
 # 1) To Create - Ouput folder
@@ -130,11 +131,14 @@ for subject in glob.glob('/home/data_ABIDE/derivatives/fmriprep/sub-*',recursive
                 schaefer_time_series = extract_timeseries(atlas_filename_schaefer, functional_img, confounds_np)
             
                 schaefer_filename_prefix =  f'{subject_name}_schaefer100'
-                correlation_matrix = compute_matrices(schaefer_time_series, schaefer_filename_prefix, dir_matrices_derivatives)
-                
-                # coordinates = plotting.find_parcellation_cut_coords(atlas_filename_schaefer)
+                correlation_matrix, mean_schaefer = compute_matrices(schaefer_time_series, schaefer_filename_prefix, dir_matrices_derivatives)
+
+                coordinates_schaefer = plotting.find_parcellation_cut_coords(atlas_filename_schaefer)
                 # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_coordinates.mat'), {'data': coordinates})
-        
+                
+                # plot connectome with 80% edge strength in the connectivity
+                plotting.plot_connectome(mean_schaefer, coordinates_schaefer, edge_threshold="80%", title='Schaefer Atlas - Connectome')
+                plotting.plot_roi(atlas_filename_schaefer, draw_cross= False, cmap=plotting.cm.bwr_r, title="Schaefer Atlas - ROI")
                 
                 try:
                     len(labels_schaefer) in np.shape(correlation_matrix)
@@ -149,21 +153,29 @@ for subject in glob.glob('/home/data_ABIDE/derivatives/fmriprep/sub-*',recursive
                 harvard_time_series = extract_timeseries(atlas_filename_harvard, functional_img, confounds_np)
             
                 harvard_filename_prefix =  f'{subject_name}_harvard48'
-                correlation_matrix = compute_matrices(harvard_time_series, harvard_filename_prefix, dir_matrices_derivatives)
+                correlation_matrix, mean_harvard = compute_matrices(harvard_time_series, harvard_filename_prefix, dir_matrices_derivatives)
 
-                # coordinates = plotting.find_parcellation_cut_coords(atlas_filename_harvard)
+                coordinates_harvard = plotting.find_parcellation_cut_coords(atlas_filename_harvard)
                 # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_coordinates.mat'), {'data': coordinates})
+                
+                # plot connectome with 80% edge strength in the connectivity
+                plotting.plot_connectome(mean_harvard, coordinates_harvard, edge_threshold="80%", title='Harvard Atlas - Connectome')
+                plotting.plot_roi(atlas_filename_harvard, draw_cross= False, cmap=plotting.cm.bwr_r, title="Harvard Atlas - ROI")
                 
             ### 3)
             # AAL ATLAS PARCELLATION
                 aal_time_series = extract_timeseries(atlas_filename_aal, functional_img, confounds_np)
             
                 aal_filename_prefix =  f'{subject_name}_AAL116'
-                correlation_matrix = compute_matrices(aal_time_series, aal_filename_prefix, dir_matrices_derivatives)
+                correlation_matrix, mean_aal = compute_matrices(aal_time_series, aal_filename_prefix, dir_matrices_derivatives)
 
-                # coordinates = plotting.find_parcellation_cut_coords(atlas_filename_aal)
+                coordinates_aal = plotting.find_parcellation_cut_coords(atlas_filename_aal)
                 # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_coordinates.mat'), {'data': coordinates})
-                        
+                
+                # plot connectome with 80% edge strength in the connectivity
+                plotting.plot_connectome(mean_aal, coordinates_aal, edge_threshold="80%", title='AAL Atlas - Connectome')
+                plotting.plot_roi(atlas_filename_aal, draw_cross= False, cmap=plotting.cm.bwr_r, title="AAL Atlas - ROI")
+                
             ### TEMP)
                 # print(f'Saving dataframe to a .csv file in : {dir_matrices_derivatives}')
                 # subject_connectivity_matrix.to_csv(f'{dir_matrices_derivatives}{subject_name}_atlas_connectivity_matrix.csv')
@@ -180,8 +192,14 @@ for subject in glob.glob('/home/data_ABIDE/derivatives/fmriprep/sub-*',recursive
                 ward_time_series = extract_timeseries(ward_parcellation_img, functional_img, confounds_np)
             
                 ward_filename_prefix =  f'{subject_name}_ward100'
-                correlation_matrix = compute_matrices(ward_time_series, ward_filename_prefix, dir_matrices_derivatives)
-            
+                correlation_matrix, mean_ward = compute_matrices(ward_time_series, ward_filename_prefix, dir_matrices_derivatives)
+                
+                coordinates_ward = plotting.find_parcellation_cut_coords(ward_parcellation_img)
+                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_ward_coordinates.mat'), {'data': coordinates_ward})
+                
+                # plot connectome with 80% edge strength in the connectivity
+                plotting.plot_connectome(mean_ward, coordinates_ward, edge_threshold="80%", title='Ward - Connectome')
+                plotting.plot_roi(ward_parcellation_img, draw_cross= False, cmap=plotting.cm.bwr_r, title="Ward - ROI")
             
             ### 5)
                 # K-MEANS PARCELLATION
@@ -190,8 +208,14 @@ for subject in glob.glob('/home/data_ABIDE/derivatives/fmriprep/sub-*',recursive
                 kmeans_time_series = extract_timeseries(kmeans_parcellation_img, functional_img, confounds_np)
                 
                 kmeans_filename_prefix = f'{subject_name}_kmeans100'
-                correlation_matrix = compute_matrices(kmeans_time_series, kmeans_filename_prefix, dir_matrices_derivatives)
+                correlation_matrix, mean_kmeans = compute_matrices(kmeans_time_series, kmeans_filename_prefix, dir_matrices_derivatives)
         
+                coordinates_k = plotting.find_parcellation_cut_coords(kmeans_parcellation_img)
+                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_k_coordinates.mat'), {'data': coordinates_k})
+                
+                # plot connectome with 80% edge strength in the connectivity
+                plotting.plot_connectome(mean_kmeans, coordinates_k, edge_threshold="80%", title='K means - Connectome')
+                plotting.plot_roi(kmeans_parcellation_img, draw_cross= False, cmap=plotting.cm.bwr_r, title="K means - ROI")
                 
                 print(f'Extracted connectivity matrix for {subject}')
                 print('------------------------------------')
