@@ -9,6 +9,10 @@ SETUP
 
 Processing Environment - Windows and/or Ubuntu
 
+MRI dataset:
+Access Link for Neurocon and TaoWu Dataset : http://fcon_1000.projects.nitrc.org/indi/retro/parkinsons.html
+Access Link for ABIDE/ADNI/PPMI : https://ida.loni.usc.edu/login.jsp. 
+
 Steps to preprocess neuroimages:
 1. Raw fmri data are in DICOM/nifti format (This step is to convert raw MRI data into BIDS format)
 	a. ABIDE_Nifti2BIDS.py - To convert raw MRI data (Nifti format) to BIDS - For ABIDE dataset
