@@ -24,6 +24,7 @@ Steps to preprocess neuroimages:
 	a. ConnectivityMatrices.py - Code to generate connectivity matrices
 4. Perform experimental analysis 
 	a. nips_paper_experiments.py
+	b. EdgeWeightsStatistics.py
 
 Note: Input/Output location and the required modification are detailed within the python codes
 
