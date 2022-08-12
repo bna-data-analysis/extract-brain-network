@@ -6,7 +6,13 @@ The sample data/subject provided is TaoWu dataset. TaoWu dataset are BIDS format
 
 STEP 2 - Preprocess data using fmriprep.
 1. Install fmriprep - https://fmriprep.org/en/stable/installation.html
-2. Single line command to run the subject is as follows "fmriprep-docker /input_folder_location/Demo/sample_taowu /output_folder_location/Demo/sample_taowu/derivatives participant --participant-label control002S0413 --skip-bids-validation --stop-on-first-crash --md-only-boilerplate --fs-no-reconall --output-spaces MNI152NLin2009cAsym:res-2 --fs-license-file /license_location/Freesurfer_license/license.txt --ignore slicetiming"
+2. Single line command to run the subject is as follows "fmriprep-docker /Demo/sample_taowu /Demo/sample_taowu/derivatives participant --participant-label control002S0413 --skip-bids-validation --stop-on-first-crash --md-only-boilerplate --fs-no-reconall --output-spaces MNI152NLin2009cAsym:res-2 --fs-license-file /license_location/Freesurfer_license/license.txt --ignore slicetiming"
+
+Where /Demo/sample_taowu - Input folder location
+/Demo/sample_taowu/derivatives - Output folder location
+control002S0413 - Subject details
+/license_location/Freesurfer_license/license.txt - Freesurfer license location (can be obtained while installing fmriprep)
+
 Note - The preprocessed files after fmriprep processing are available in /Demo/sample_taowu/derivatives folder. The files are included for reference.
 
 STEP 3 - Extract Connectivity matrices
