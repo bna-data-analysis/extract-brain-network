@@ -24,6 +24,7 @@ This repository contains a package of scripts and codes used in the paper to con
 
 ## Step A: Data Collection and Selection
 Access Link for Neurocon and TaoWu Dataset : http://fcon_1000.projects.nitrc.org/indi/retro/parkinsons.html
+A sample TaoWu subject can be accessed here: https://figshare.com/s/dfadce2aaf5d0d94d403?file=36742629
 
 Access Link for ABIDE/ADNI/PPMI : https://ida.loni.usc.edu/login.jsp. 
 
@@ -45,6 +46,8 @@ Make sure you have installed fMRIPrep correctly using the information and guides
 	* fmriprep_shellscript.sh - Script to execute fmriprep preprocessing
 * fMRIPrep outputs a number of BIDS Derivative compliant files
 	* For details on each file: https://fmriprep.org/en/stable/outputs.html
+
+A sample of a fully preprocessed TaoWu subject (and its outputs) can be accessed here: https://figshare.com/s/dfadce2aaf5d0d94d403?file=36742644
 
 ## Steps D, E, and F: Parcellation and ROI Definition, Connectivity Matrix Extraction, and Graphical Brain Network
 
