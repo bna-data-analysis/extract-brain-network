@@ -1,32 +1,60 @@
-# extract-brain-network
-Python package to convert raw functional images to connectivity matrices
+# Data-Driven Network Neuroscience: On Data Collection and Benchmark
 
-SETUP 
+This repository contains a package of scripts and codes used in the paper to convert raw functional images to connectivity matrices using fMRIPrep (https://fmriprep.org/en/stable/)
+
+## Requirements
+* Containerized execution environment: 
+	* Docker (https://www.nipreps.org/apps/docker/) or 
+	* Singularity (https://www.nipreps.org/apps/singularity/)
+
+## External Dependencies
+* fMRIPrep (version 20.2.3 - https://fmriprep.org/en/stable/index.html)
+* dcm2niix (https://github.com/rordenlab/dcm2niix)
+* nilearn (https://nilearn.github.io/stable/index.html)
+
+## Setup
+
 1. Install numpy, os, shutil, glob, dcm2niix, nilearn, scipy modules for python programming
-2. Install Docker and fmriprep 
-	https://docs.docker.com/
-	https://fmriprep.org/en/stable/installation.html (Fmriprep version - 20.2.3)
+2. Install Docker/Singularity and fMRIPrep 
+	* Installing fMRIPrep requires several steps. We recommend following this guide (https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html)
 
-Processing Environment - Windows and/or Ubuntu
+## Steps to preprocess neuroimages:
 
-MRI dataset:
+![alt text](https://raw.githubusercontent.com/bna-data-analysis/extract-brain-network/main/asset/nips_flowchart.png)
+
+## Step A: Data Collection and Selection
 Access Link for Neurocon and TaoWu Dataset : http://fcon_1000.projects.nitrc.org/indi/retro/parkinsons.html
+
 Access Link for ABIDE/ADNI/PPMI : https://ida.loni.usc.edu/login.jsp. 
 
-Steps to preprocess neuroimages:
-1. Raw fmri data are in DICOM/nifti format (This step is to convert raw MRI data into BIDS format)
-	(a) ABIDE_Nifti2BIDS.py - To convert raw MRI data (Nifti format) to BIDS - For ABIDE dataset
-	(b) ADNI_PPMI_DCM2BIDS.py - To convert raw MRI data (DICOM format) to BIDS - For PPMI and ADNI dataset
-	(c) Neurocon and TaoWu dataset are Nifti files and are BIDS formatted data structure
-2. Preprocess BIDS formatted neuroimaging data using fmriprep
-	(a) fmriprep_shellscript.sh - Script to execute fmriprep preprocessing
-3. Convert preprocessed Nifti images into connectivity matrices
-	(a) ConnectivityMatrices.py - Code to generate connectivity matrices
-4. Perform experimental analysis 
-	(a) nips_paper_experiments.py
-	(b) EdgeWeightsStatistics.py
+* Each fMRI image needs to be accompanied with a structural T1-weighted (T1w) image acquired from the same subject (ideally) in the same scan session
+
+## Step B: BIDS Format Conversion
+
+Raw T1w/fMRI data are in DICOM or NifTi format 
+* This step is to convert raw MRI data in either DICOM or NifTi into BIDS format
+	* ABIDE_Nifti2BIDS.py - To convert raw MRI data (Nifti format) to BIDS - For ABIDE dataset
+	* ADNI_PPMI_DCM2BIDS.py - To convert raw MRI data (DICOM format) to BIDS - For PPMI and ADNI dataset
+	* Neurocon and TaoWu dataset are Nifti files and are already BIDS formatted
+
+## Step C: fMRIPrep Preprocessing
+
+Make sure you have installed fMRIPrep correctly using the information and guides from the links above.
+
+* Preprocess BIDS formatted neuroimages (1 T1w image and 1 fMRI BOLD image) using fMRIPrep
+	* fmriprep_shellscript.sh - Script to execute fmriprep preprocessing
+
+## Steps D, E, and F: Parcellation and ROI Definition, Connectivity Matrix Extraction, and Graphical Brain Network
+
+* Convert preprocessed Nifti images into connectivity matrices
+	* ConnectivityMatrices.py - Code to generate connectivity matrices
+
+## Perform Experimental Analysis
+
+* The codes we used to run our empirical analysis 
+	* nips_paper_experiments.py
+	* EdgeWeightsStatistics.py
 
 Note: Input/Output location and the required modification are detailed within the python codes
-
 
 
