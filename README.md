@@ -43,6 +43,8 @@ Make sure you have installed fMRIPrep correctly using the information and guides
 
 * Preprocess BIDS formatted neuroimages (1 T1w image and 1 fMRI BOLD image) using fMRIPrep
 	* fmriprep_shellscript.sh - Script to execute fmriprep preprocessing
+* fMRIPrep outputs a number of BIDS Derivative compliant files
+	* For details on each file: https://fmriprep.org/en/stable/outputs.html
 
 ## Steps D, E, and F: Parcellation and ROI Definition, Connectivity Matrix Extraction, and Graphical Brain Network
 
