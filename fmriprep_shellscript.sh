@@ -4,7 +4,7 @@
 #User inputs:
 bids_root_dir=$HOME/data_fmriprep/ABIDE #Enter Input folder
 subj=patient50002 #Enter subject details - {subject_Info}{ID}
-nthreads=4 #number of processors
+nthreads=8 #number of processors
 mem=20 #gb
 container=docker #docker or singularity
 
