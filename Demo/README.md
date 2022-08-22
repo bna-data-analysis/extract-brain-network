@@ -18,7 +18,7 @@ The sample data/subject provided is TaoWu dataset. TaoWu dataset are BIDS format
 Note - The preprocessed files after fmriprep processing are available in /Demo/sample_taowu/derivatives folder. The files are included for reference.
 
 ## STEP 3 - Extract Connectivity matrices
-1. Run ConnectivityMatrices.py file. This generates the adjacency matrix and features matrix of graph dataset
+1. Run ConnectivityMatrices.py file. This generates the adjacency matrices and feature matrices.
 
 
 
