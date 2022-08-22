@@ -33,9 +33,9 @@ Access Link for ABIDE/ADNI/PPMI : https://ida.loni.usc.edu/login.jsp.
 
 Raw T1w/fMRI data are in DICOM or NifTi format 
 * This step is to convert raw MRI data in either DICOM or NifTi into BIDS format (https://bids.neuroimaging.io/)
-	* ABIDE_Nifti2BIDS.py - To convert raw MRI data (Nifti format) to BIDS - For ABIDE dataset
+	* ABIDE_Nifti2BIDS.py - To convert raw MRI data (NifTi format) to BIDS - For ABIDE dataset
 	* ADNI_PPMI_DCM2BIDS.py - To convert raw MRI data (DICOM format) to BIDS - For PPMI and ADNI dataset
-	* Neurocon and TaoWu dataset are Nifti files and are already BIDS formatted
+	* Neurocon and TaoWu dataset are NifTi files and are already BIDS formatted
 
 ## Step C: fMRIPrep Preprocessing
 
