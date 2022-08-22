@@ -2,7 +2,7 @@
 
 This repository contains a package of scripts and codes used in the paper to convert raw functional images to connectivity matrices using fMRIPrep (https://fmriprep.org/en/stable/)
 
-## I just want to see samples of the raw MRI / preprocessed outputs / matrices  
+## Samples of the raw MRI / preprocessed outputs / matrices  
 
 * A sample TaoWu subject can be accessed here: https://figshare.com/s/dfadce2aaf5d0d94d403?file=36742629
 * The fMRIPrep outputs of the same subject fully preprocessed can be accessed here: https://figshare.com/s/dfadce2aaf5d0d94d403?file=36742644
