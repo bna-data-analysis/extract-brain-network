@@ -6,9 +6,9 @@ Parcellations generated are: AAL, HarvardOxford, Schaefer, kmeans and ward
 
 SETUP -
 1. Update output folder path in 'connectivity_matrices_dir' -
-Line 85 (Folder location to save connectivity matrices)
+Line 117 (Folder location to save connectivity matrices)
 2. Update input folder path in 'for' loop -
-Line 103 (Main folder location which has preprocessed functional
+Line 145 (Main folder location which has preprocessed functional
   nifti files of ABIDE/ADNI/PPMI/TaoWu/Neurocon dataset)
 """
 

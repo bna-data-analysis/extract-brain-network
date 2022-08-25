@@ -7,7 +7,7 @@ SETUP -
 1. Install shutil, os, glob modules
 2. The given code is for normal controls. Rename 'control' to 'patient'
     based on the subjects (Normal control or with Autism)
-3. Update input folder path in 'folder' - Line 16
+3. Update input folder path in 'folder' - Line 26
     (The folder must contain all the downloaded subjects from IDA LONI)
 
 Sample json files for T1w/anat available in

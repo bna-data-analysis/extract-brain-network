@@ -7,8 +7,8 @@ SETUP -
 1. Install dcm2niix, numpy, os, shutil, glob
 2. The given code is for subjects with LMCI. Rename 'LMCI' to 'control',
        'patient', 'SMC', 'EMCI', 'MCI' based on the subjects
-3. Update output folder path in 'Output main' - Line 18
-4. Update input folder path in 'for' loop - Line 25
+3. Update output folder path in 'Output main' - Line 22
+4. Update input folder path in 'for' loop - Line 29
 """
 # importing os module
 import os
