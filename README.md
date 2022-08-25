@@ -1,3 +1,5 @@
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 # Data-Driven Network Neuroscience: On Data Collection and Benchmark
 
 This repository contains a package of scripts and codes used in the paper to convert raw functional images to connectivity matrices using fMRIPrep (https://fmriprep.org/en/stable/)
