@@ -150,9 +150,9 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
             print(" ")
 
             pre_processed_fmri_file = f"{subject}/func/{subject_name}_task-resting_\
-                run-{session}_space-MNI152NLin2009cAsym_res-2_desc-preproc_bold.nii.gz"
+run-{session}_space-MNI152NLin2009cAsym_res-2_desc-preproc_bold.nii.gz"
             full_confound_file_fmriprep = f"{subject}/func/{subject_name}_task-resting\
-                _run-{session}_desc-confounds_timeseries.tsv"
+_run-{session}_desc-confounds_timeseries.tsv"
 
             functional_img = load_img(pre_processed_fmri_file)
             print("Shape of image: ", functional_img.get_fdata().shape)  # 4D data
