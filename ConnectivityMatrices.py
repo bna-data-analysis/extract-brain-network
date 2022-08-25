@@ -4,10 +4,11 @@ Python code that takes in a BIDS compliant dataset and performs
 Parcellations generated are: AAL, HarvardOxford, Schaefer, kmeans and ward
 SETUP -
 1. Update output folder path in 'connectivity_matrices_dir' -
-Line 112 (Folder location to save connectivity matrices)
+Line 113 (Folder location to save connectivity matrices)
 2. Update input folder path in 'for' loop -
-Line 140 (Main folder location which has preprocessed functional
+Line 141 (Main folder location which has preprocessed functional
   nifti files of ABIDE/ADNI/PPMI/TaoWu/Neurocon dataset)
+3. Double check lines 153-156 for input file names
 """
 
 # Nilearn packages:
