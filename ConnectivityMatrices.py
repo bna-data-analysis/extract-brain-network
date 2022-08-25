@@ -1,14 +1,12 @@
 """
 Python code that takes in a BIDS compliant dataset and performs
   parcellation to generate connectivity matrices
-
 Parcellations generated are: AAL, HarvardOxford, Schaefer, kmeans and ward
-
 SETUP -
 1. Update output folder path in 'connectivity_matrices_dir' -
-Line 117 (Folder location to save connectivity matrices)
+Line 112 (Folder location to save connectivity matrices)
 2. Update input folder path in 'for' loop -
-Line 145 (Main folder location which has preprocessed functional
+Line 140 (Main folder location which has preprocessed functional
   nifti files of ABIDE/ADNI/PPMI/TaoWu/Neurocon dataset)
 """
 
@@ -17,10 +15,6 @@ from nilearn import datasets  # For atlases
 
 from nilearn import plotting  # To plot brain images
 from nilearn.input_data import NiftiLabelsMasker  # To mask the data
-from nilearn.connectome import (
-    ConnectivityMeasure,
-)  # To compute the connectivity matrices
-from nilearn.image import load_img
 
 # Various packages
 import glob
@@ -54,7 +48,7 @@ labels_aal = atlas_aal.labels
 
 
 def kmeans_parcellation(functional_img, confounds):
-    """Returns a kmeans parcellation using the functional image and counfounds defined"""
+    """Returns kmeans parcellation using the functional image and confounds"""
     kmeans = Parcellations(
         method="kmeans",
         n_parcels=100,
@@ -70,7 +64,7 @@ def kmeans_parcellation(functional_img, confounds):
 
 
 def ward_parcellation(functional_img, confounds_np):
-    """Returns a ward parcellation using the functional image and counfounds defined"""
+    """Returns ward parcellation using the functional image and counfounds"""
     ward = Parcellations(
         method="ward",
         n_parcels=100,
@@ -83,13 +77,14 @@ def ward_parcellation(functional_img, confounds_np):
     # Call fit on functional dataset: single subject (less samples).
     ward.fit(functional_img, confounds=confounds_np)
 
-    # labels_img is a Nifti1Image object, it can be saved to file with the following code:
+    # Save the file
     # labels_img.to_filename('parcellation.nii.gz')
     return ward.labels_img_
 
 
 def extract_timeseries(parcellation_img, functional_img, confounds):
-    """extracts the timeseries of each defined ROI (from the parcellation) and the input functional image"""
+    """extracts the timeseries of each defined ROI (from the parcellation) and 
+    the input functional image"""
     masker = NiftiLabelsMasker(
         labels_img=parcellation_img, standardize=True, memory="nilearn_cache", verbose=5
     )
@@ -154,8 +149,10 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
             print("------------------------------------")
             print(" ")
 
-            pre_processed_fmri_file = f"{subject}/func/{subject_name}_task-resting_run-{session}_space-MNI152NLin2009cAsym_res-2_desc-preproc_bold.nii.gz"
-            full_confound_file_fmriprep = f"{subject}/func/{subject_name}_task-resting_run-{session}_desc-confounds_timeseries.tsv"
+            pre_processed_fmri_file = f"{subject}/func/{subject_name}_task-resting_\
+                run-{session}_space-MNI152NLin2009cAsym_res-2_desc-preproc_bold.nii.gz"
+            full_confound_file_fmriprep = f"{subject}/func/{subject_name}_task-resting\
+                _run-{session}_desc-confounds_timeseries.tsv"
 
             functional_img = load_img(pre_processed_fmri_file)
             print("Shape of image: ", functional_img.get_fdata().shape)  # 4D data
@@ -187,8 +184,7 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                 coordinates_schaefer = plotting.find_parcellation_cut_coords(
                     atlas_filename_schaefer
                 )
-                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_coordinates.mat'), {'data': coordinates})
-
+                
                 # plot connectome with 80% edge strength in the connectivity
                 plotting.plot_connectome(
                     mean_schaefer,
@@ -207,7 +203,7 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                     len(labels_schaefer) in np.shape(correlation_matrix)
                     if False:
                         raise ValueError(
-                            "The length of the labels do not match the shape of the correlation_matrix"
+                            "Length of labels do not match size of correlation_matrix"
                         )
                 except ValueError:
                     exit("The shape of the matrix and labels are not matching")
@@ -229,8 +225,7 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                 coordinates_harvard = plotting.find_parcellation_cut_coords(
                     atlas_filename_harvard
                 )
-                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_coordinates.mat'), {'data': coordinates})
-
+                
                 # plot connectome with 80% edge strength in the connectivity
                 plotting.plot_connectome(
                     mean_harvard,
@@ -259,8 +254,7 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                 coordinates_aal = plotting.find_parcellation_cut_coords(
                     atlas_filename_aal
                 )
-                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_coordinates.mat'), {'data': coordinates})
-
+                
                 # plot connectome with 80% edge strength in the connectivity
                 plotting.plot_connectome(
                     mean_aal,
@@ -274,14 +268,6 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                     cmap=plotting.cm.bwr_r,
                     title="AAL Atlas - ROI",
                 )
-
-                ### TEMP)
-                # print(f'Saving dataframe to a .csv file in : {dir_matrices_derivatives}')
-                # subject_connectivity_matrix.to_csv(f'{dir_matrices_derivatives}{subject_name}_atlas_connectivity_matrix.csv')
-                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_atlas_connectivity_matrix.mat'), {'data': subject_connectivity_matrix})
-
-                # pd.DataFrame(coordinates).to_csv(f'{dir_matrices_derivatives}{subject_name}_atlas_coordinates.csv')
-                # pd.DataFrame(schaefer_time_series).to_csv(f'{dir_matrices_derivatives}{subject_name}_atlas_Features_timeseries.csv')
 
                 # 4)
                 # WARD PARCELLATION
@@ -299,8 +285,7 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                 coordinates_ward = plotting.find_parcellation_cut_coords(
                     ward_parcellation_img
                 )
-                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_ward_coordinates.mat'), {'data': coordinates_ward})
-
+                
                 # plot connectome with 80% edge strength in the connectivity
                 plotting.plot_connectome(
                     mean_ward,
@@ -333,8 +318,7 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
                 coordinates_k = plotting.find_parcellation_cut_coords(
                     kmeans_parcellation_img
                 )
-                # scipy.io.savemat(os.path.join(dir_matrices_derivatives, f'{subject_name}_k_coordinates.mat'), {'data': coordinates_k})
-
+                
                 # plot connectome with 80% edge strength in the connectivity
                 plotting.plot_connectome(
                     mean_kmeans,
@@ -354,6 +338,6 @@ for subject in glob.glob("/home/data_ABIDE/derivatives/fmriprep/sub-*", recursiv
 
             else:
                 print(
-                    f"Directory {dir_matrices_derivatives} already exists. None is created."
+                    f"Directory {dir_matrices_derivatives} already exists."
                 )
 print("Done!")
