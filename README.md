@@ -65,7 +65,7 @@ A sample of a fully preprocessed TaoWu subject (and its outputs) can be accessed
 ## Perform Experimental Analysis
 
 * The codes we used to run our empirical analysis 
-	* nips_paper_experiments.py
+	* NIPS_paper_gridsearch_experiments.py
 	* EdgeWeightsStatistics.py
 
 Note: Input/Output location and the required modification are detailed within the python codes
