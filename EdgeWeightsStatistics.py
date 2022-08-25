@@ -11,7 +11,7 @@ import scipy.io
 
 import glob
 
-ip_path = r"/home/dhua035/ipynb/graph_clustering/NIPS_paper/datasets/taowu\*"
+ip_path = r"C:/python/Data/taowu\*"
 print(ip_path)
 
 
