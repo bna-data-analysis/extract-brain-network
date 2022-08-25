@@ -26,7 +26,6 @@ if [ $container == singularity ]; then
     --skip-bids-validation \
     --md-only-boilerplate \
     --fs-license-file $HOME/fmriprep_data/flanker/derivatives/license.txt \
-    --fs-no-reconall \
     --output-spaces MNI152NLin2009cAsym:res-2 \
     --nthreads $nthreads \
     --stop-on-first-crash \
@@ -38,7 +37,6 @@ else
     --skip-bids-validation \
     --md-only-boilerplate \
     --fs-license-file $HOME/fmriprep_data/flanker/derivatives/license.txt \
-    --fs-no-reconall \
     --output-spaces MNI152NLin2009cAsym:res-2 \
     --nthreads $nthreads \
     --stop-on-first-crash \
