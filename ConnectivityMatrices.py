@@ -8,7 +8,7 @@ Line 113 (Folder location to save connectivity matrices)
 2. Update input folder path in 'for' loop -
 Line 141 (Main folder location which has preprocessed functional
   nifti files of ABIDE/ADNI/PPMI/TaoWu/Neurocon dataset)
-3. Double check lines 153-156 for input file names
+3. Double check lines 153-156 for input file names (remove run tag if not available)
 """
 
 # Nilearn packages:
