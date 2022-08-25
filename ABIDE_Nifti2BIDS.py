@@ -1,21 +1,21 @@
 """
-Python code to convert group of Nifti files to BIDS format - ABIDE dataset
+Python code to convert Nifti files to BIDS format - ABIDE dataset
 Download ABIDE dataset from https://ida.loni.usc.edu/home/projectPage.jsp?
                         project=ABIDE&page=HOME&subPage=OVERVIEW_PR
 
 SETUP -
 1. Install shutil, os, glob modules
-2. The given code is for normal controls. Rename 'control' to 'patient'
-    based on the subjects (Normal control or with Autism)
+2. The given code is for patient. Rename 'patient' to 'control'
+    based on the subjects (Autism or with Normal control)
 3. Update input folder path in 'folder' - Line 26
     (The folder must contain all the downloaded subjects from IDA LONI)
-
+    
 Sample json files for T1w/anat available in
 //sample_json_file/sub-patient50002_T1w.json
 (Manually update the metadata information of each subject from IDA LONI)
 
 Sample json file for functional data available in
-//sample_json_file/sub-control50002_task-resting_run-1_bold.json
+//sample_json_file/sub-patient50002_task-resting_run-1_bold.json
 (Update metadata information of each subject from IDA LONI)
 """
 
@@ -23,7 +23,7 @@ import os
 import glob
 import shutil
 
-folder = "C:/ABIDE_Control"
+folder = "C:/ABIDE"
 for count, filename in enumerate(os.listdir(folder)):
 
     """ANAT folder name change"""
@@ -40,13 +40,13 @@ for count, filename in enumerate(os.listdir(folder)):
     shutil.copy2(anat_json_ref, anat_nii_destination)
 
     os.rename(
-        (f"{anat_nii_destination}/sub-control50002_T1w.json"),
-        (f"{anat_nii_destination}/sub-control{filename}_T1w.json"),
+        f"{anat_nii_destination}/sub-patient50002_T1w.json",
+        f"{anat_nii_destination}/sub-patient{filename}_T1w.json"
     )
     for anat_nii_source2 in glob.glob(f"{folder}/{filename}/MP-RAGE/*.nii"):
         os.rename(
             (f"{anat_nii_source2}"),
-            (f"{anat_nii_destination}/sub-control{filename}_T1w.nii"),
+            (f"{anat_nii_destination}/sub-patient{filename}_T1w.nii"),
         )
 
     os.rename(anat_nii_destination, f"{folder}/{filename}/anat")
@@ -64,20 +64,20 @@ for count, filename in enumerate(os.listdir(folder)):
     shutil.copy2(func_json_ref, func_nii_destination)
 
     os.rename(
-        (f"{func_nii_destination}/sub-control50002_task-resting_run-1_bold.json"),
-        (f"{func_nii_destination}/sub-control{filename}_task-resting_run-1_bold.json"),
+        (f"{func_nii_destination}/sub-patient50002_task-resting_run-1_bold.json"),
+        (f"{func_nii_destination}/sub-patient{filename}_task-resting_run-1_bold.json"),
     )
     for func_nii_source2 in glob.glob(f"{folder}/{filename}/Resting_State_fMRI/*.nii"):
         os.rename(
             (f"{func_nii_source2}"),
             (
-                f"{func_nii_destination}/sub-control{filename}_task-resting_run-1_bold.nii"
+                f"{func_nii_destination}/sub-patient{filename}_task-resting_run-1_bold.nii"
             ),
         )
 
     os.rename(func_nii_destination, f"{folder}/{filename}/func")
 
-    os.rename(f"{folder}/{filename}", f"{folder}/sub-control{filename}")
+    os.rename(f"{folder}/{filename}", f"{folder}/sub-patient{filename}")
 
     # #Remove specific nii file (Remove the excess folders after conversion)
     # os.remove(f"{folder}/{filename}/anat/{filename}_T1w.nii")
