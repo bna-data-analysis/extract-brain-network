@@ -95,7 +95,7 @@ def extract_timeseries(parcellation_img, functional_img, confounds):
 
 # Calculate connectivity matrices
 def compute_matrices(time_series, filename_prefix, output_dir):
-    """generates both the correlation matrix and the feature matrix (BOLD time series)"""
+    """generates the correlation matrix and the feature matrix (BOLD time series)"""
     correlation_measure = ConnectivityMeasure(kind="correlation")
     correlation_matrix = correlation_measure.fit_transform([time_series])[0]
     mean_correlation_matrix = correlation_measure.mean_
@@ -118,7 +118,7 @@ if not os.path.exists(connectivity_matrices_dir):
     print(f"Created directory:{connectivity_matrices_dir}")
 else:
     print(
-        f"Directory {connectivity_matrices_dir} already exists. No directory is created."
+        f"Directory {connectivity_matrices_dir} already exists. No directory created."
     )
 
 
