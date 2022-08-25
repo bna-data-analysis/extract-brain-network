@@ -1,5 +1,5 @@
 """
-Python code to convert Nifti files to BIDS format - ABIDE dataset
+Python code to convert group of Nifti files to BIDS format - ABIDE dataset
 Download ABIDE dataset from https://ida.loni.usc.edu/home/projectPage.jsp?
                         project=ABIDE&page=HOME&subPage=OVERVIEW_PR
 
